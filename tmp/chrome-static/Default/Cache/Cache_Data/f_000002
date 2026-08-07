@@ -1,0 +1,308 @@
+const pages = [
+  ['index.html', 'Inicio'], ['nosotras.html', 'Nosotras'], ['jornadas.html', 'Jornadas'],
+  ['experiencias.html', 'Experiencias'], ['contacto.html', 'Contacto']
+];
+const current = document.body.dataset.page;
+const iconSvg = (name, className = '') => {
+  const paths = {
+    brain: '<path d="M9.5 4.5A3.5 3.5 0 0 0 6 8v1a3 3 0 0 0 0 6v1a3.5 3.5 0 0 0 3.5 3.5V4.5Zm5 0A3.5 3.5 0 0 1 18 8v1a3 3 0 0 1 0 6v1a3.5 3.5 0 0 1-3.5 3.5V4.5ZM9.5 9H7m2.5 5H7m7.5-5H17m-2.5 5H17"/>',
+    award: '<circle cx="12" cy="8" r="4"/><path d="m9.5 12-1 8 3.5-2 3.5 2-1-8M10.5 8l1 1 2-2"/>',
+    eye: '<path d="M2 12s4-6 10-6 10 6 10 6-4 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="2.5"/>',
+    puzzle: '<path d="M8 3h4a2 2 0 1 0 4 0h3v5a2 2 0 1 1 0 4v7h-7a2 2 0 1 1-4 0H3v-5a2 2 0 1 0 0-4V3h5Z"/>',
+    hand: '<path d="M3 17c3-1 5-1 7 1l1 1c1 1 3 1 4 0l6-5c-1-1-3-1-4 0l-2 1"/><path d="M3 13h5l3 2c1 1 3 0 3-1 0-.5-.3-1-.8-1.3L9 10H6c-1 0-2 .5-3 1.5"/><path d="M15 9c0-2 1-4 4-5 0 3-1 5-4 5Z"/>',
+    users: '<circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 19c.5-4 2.5-6 6-6s5.5 2 6 6M14 14c3.5-.5 6 1 7 4"/>',
+    briefcase: '<rect x="3" y="7" width="18" height="12" rx="2"/><path d="M8 7V5h8v2M3 12h18M10 12v2h4v-2"/>',
+    lotus: '<path d="M12 20c-4-3-6-6-6-10 3 0 5 1 6 3 1-2 3-3 6-3 0 4-2 7-6 10Z"/><path d="M12 13c-2-3-2-6 0-9 2 3 2 6 0 9ZM6 13c-2-1-3-3-3-5 2 0 4 1 5 3m8 2c2-1 3-3 3-5-2 0-4 1-5 3"/>',
+    leaf: '<path d="M19 4C11 4 6 8 6 15c4 1 8 0 11-3 2-2 2-5 2-8Z"/><path d="M5 20c2-5 6-9 12-12"/>',
+    home: '<path d="m3 11 9-8 9 8v10h-6v-6H9v6H3V11Z"/>',
+    cloud: '<path d="M6 18h11a4 4 0 0 0 .5-8A6 6 0 0 0 6 8.5 4.8 4.8 0 0 0 6 18Z"/><path d="M8 21v-3m4 3v-3m4 3v-3"/>',
+    lungs: '<path d="M11 4v8c-1-2-2-4-4-5-2 2-3 5-3 8 0 3 2 5 5 5 1 0 2-1 2-3m2-13v8c1-2 2-4 4-5 2 2 3 5 3 8 0 3-2 5-5 5-1 0-2-1-2-3"/>',
+    heart: '<path d="M12 21s-8-4.5-8-11a4.5 4.5 0 0 1 8-3 4.5 4.5 0 0 1 8 3c0 6.5-8 11-8 11Z"/><path d="M7 21c1-3 3-5 5-5s4 2 5 5"/>',
+    sprout: '<path d="M12 22V11m0 4c-5 0-8-3-8-8 5 0 8 3 8 8Zm0-3c0-5 3-8 8-8 0 5-3 8-8 8Z"/>',
+    clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+    monitor: '<rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8m-4-4v4"/>',
+    group: '<circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c0-4 2-7 6-7s6 3 6 7m-1-5c4-1 7 1 7 5"/>',
+    building: '<path d="M4 21V6l8-3v18M12 9h8v12M7 8h2m-2 4h2m-2 4h2m8-4h1m-1 4h1M2 21h20"/>',
+    pin: '<path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/>',
+    globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>',
+    calendar: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4m10-4v4M3 10h18"/>',
+    target: '<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><path d="m12 12 8-8m-4 0h4v4"/>',
+    edit: '<path d="M4 20h4L20 8l-4-4L4 16v4Z"/><path d="m14 6 4 4M3 21h18"/>',
+    sliders: '<path d="M4 7h10m4 0h2M4 17h2m4 0h10M14 4v6M6 14v6"/>',
+    quote: '<path d="M7 10H4a4 4 0 0 0 4 4v4H4v-4a8 8 0 0 1 3-6m10 2h-3a4 4 0 0 0 4 4v4h-4v-4a8 8 0 0 1 3-6"/>',
+    mail: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 7 9-7"/>',
+    phone: '<path d="M7 3 4 5c-1 1 1 6 5 10s9 6 10 5l2-3-5-3-2 2c-2-1-5-4-6-6l2-2-3-5Z"/>'
+    ,search: '<circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/>'
+    ,chart: '<path d="M4 20V10m5 10V4m6 16v-7m5 7V7M3 20h19"/><path d="m4 8 5-4 6 5 5-4"/>'
+    ,shield: '<path d="M12 3 4 6v6c0 5 3 8 8 10 5-2 8-5 8-10V6l-8-3Z"/><path d="m9 12 2 2 4-5"/>'
+    ,clipboard: '<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V2h6v2M8 9h8m-8 4h8m-8 4h5"/>'
+  };
+  return `<svg class="line-icon ${className}" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${paths[name] || paths.lotus}</svg>`;
+};
+
+if (current === 'inicio') {
+  document.querySelector('.hero-copy').insertAdjacentHTML('beforeend', `<div class="trusted"><small>Confían en nosotros</small><div><span>Grupo Familia</span><span>Compensar</span><span>Fundación Santillana</span></div></div>`);
+  document.querySelector('.hero').insertAdjacentHTML('afterend', `<section class="benefit-strip" aria-label="Características del servicio"><div class="container grid grid-4"><article><span>◉</span><div><strong>Enfoque humano con base científica</strong><p>Intervenciones basadas en evidencia.</p></div></article><article><span>♙</span><div><strong>Facilitadoras certificadas</strong><p>Profesionales expertas en bienestar.</p></div></article><article><span>♧</span><div><strong>Jornadas presenciales</strong><p>Experiencias vivenciales para equipos.</p></div></article><article><span>▣</span><div><strong>Herramientas aplicables</strong><p>Recursos para sostener aprendizajes.</p></div></article></div></section>`);
+}
+if (current === 'inicio') {
+  const hero = document.querySelector('.hero');
+  hero.classList.add('home-hero');
+  hero.querySelector('.hero-badges')?.remove();
+  const trusted = hero.querySelector('.trusted');
+  if (trusted) trusted.innerHTML = `<small><span></span>Organizaciones que confían en nosotros<span></span></small><div><span class="trusted-org"><i class="org-logo">${iconSvg('award')}</i><strong>Universidad del<br>Rosario</strong></span><span class="trusted-org"><i class="org-logo">${iconSvg('briefcase')}</i><strong>Bancolombia</strong></span><span class="trusted-org"><i class="org-logo">${iconSvg('sprout')}</i><strong>Grupo<br>familia</strong></span></div>`;
+
+  const benefits = document.querySelector('.benefit-strip');
+  benefits.innerHTML = `<div class="container benefit-grid"><article><span>${iconSvg('brain')}</span><div><strong>Enfoque humano<br>con base científica</strong><p>Intervenciones basadas en evidencia y centradas en las personas.</p></div></article><article><span>${iconSvg('award')}</span><div><strong>Facilitadoras<br>certificadas</strong><p>Profesionales expertas en bienestar organizacional y psicología aplicada.</p></div></article><article><span>${iconSvg('users')}</span><div><strong>Jornadas<br>presenciales</strong><p>Experiencias vivenciales que generan conexión y aprendizaje significativo.</p></div></article><article><span>${iconSvg('briefcase')}</span><div><strong>Herramientas<br>aplicables</strong><p>Recursos prácticos para integrar el bienestar en el día a día.</p></div></article></div>`;
+
+  const programHeading = [...document.querySelectorAll('h2')].find(node => node.textContent.includes('Programas vivenciales'));
+  const programCards = programHeading?.parentElement.querySelectorAll('.program-card') || [];
+  programHeading?.closest('section')?.classList.add('journey-programs');
+  const programData = [
+    {icon:'lotus', hours:'4 horas', theme:'present'},
+    {icon:'leaf', hours:'6 horas', theme:'wellbeing'},
+    {icon:'home', hours:'6 horas', theme:'habitar'}
+  ];
+  programCards.forEach((card, index) => {
+    card.classList.add(`program-${programData[index].theme}`);
+    card.classList.add(`journey-program-${index + 1}`);
+    const icon = card.querySelector('.card-icon');
+    if (icon) { icon.classList.add('journey-program-icon'); icon.innerHTML = iconSvg(programData[index].icon); }
+    if (index === 1) card.insertAdjacentHTML('afterbegin', '<span class="recommended">☆ Recomendada</span>');
+    const link = card.querySelector('a');
+    link?.insertAdjacentHTML('beforebegin', `<div class="program-meta journey-program-meta"><span>${iconSvg('clock')} ${programData[index].hours}</span><span>${iconSvg('monitor')} Presencial o virtual</span></div>`);
+  });
+
+  const processHeading = [...document.querySelectorAll('h2')].find(node => node.textContent.includes('sobrecarga'));
+  const steps = processHeading?.parentElement.querySelectorAll('.step') || [];
+  const stepIcons = ['cloud','lungs','heart','users','sprout'];
+  const stepTitles = ['Sobrecarga emocional','Pausa consciente','Herramientas prácticas','Conexión de equipo','Bienestar aplicable'];
+  const stepDescriptions = [
+    'Equipos cansados, ansiosos o desconectados del presente.',
+    'Abrimos un espacio seguro para detenerse, respirar y conectar.',
+    'Entregamos recursos de autocuidado y regulación emocional aplicables.',
+    'Facilitamos dinámicas que fortalecen la comunicación, la empatía y la confianza.',
+    'El equipo se lleva prácticas simples para sostener el bienestar en el tiempo.'
+  ];
+  steps[0]?.parentElement.insertAdjacentHTML('afterbegin','<svg class="process-connector" viewBox="0 0 1000 70" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="process-gradient" x1="0" x2="1"><stop offset="0" stop-color="#8847a4"/><stop offset=".48" stop-color="#3c68b7"/><stop offset="1" stop-color="#079ba4"/></linearGradient></defs><path d="M40 36 C85 10 125 10 175 36 S270 62 320 36 S415 10 465 36 S560 62 610 36 S705 10 755 36 S850 62 960 36" fill="none" stroke="url(#process-gradient)" stroke-width="3"/><g fill="url(#process-gradient)"><circle cx="175" cy="36" r="5"/><circle cx="320" cy="36" r="5"/><circle cx="465" cy="36" r="5"/><circle cx="610" cy="36" r="5"/><circle cx="755" cy="36" r="5"/></g></svg>');
+  steps.forEach((step,index) => {
+    step.querySelector('b').innerHTML = `${iconSvg(stepIcons[index])}<span>${index+1}</span>`;
+    step.querySelector('h3').textContent = stepTitles[index];
+    step.querySelector('p').textContent = stepDescriptions[index];
+  });
+
+  const experiencesHeading = [...document.querySelectorAll('h2')].find(node => node.textContent.trim() === 'Experiencias realizadas');
+  if (experiencesHeading) {
+    const intro = experiencesHeading.parentElement;
+    intro.classList.add('experience-heading');
+    intro.insertAdjacentHTML('beforeend', `<a class="all-experiences" href="experiencias.html">${iconSvg('group')}<span>Ver todas las experiencias</span> →</a>`);
+    const cards = intro.parentElement.querySelectorAll('.program-card');
+    cards.forEach(card => card.querySelector('img')?.insertAdjacentHTML('afterend','<a class="experience-more" href="experiencias.html">Conocer más <span>→</span></a>'));
+  }
+}
+if (current === 'nosotras') {
+  document.querySelector('.hero').insertAdjacentHTML('afterend', `<section class="trait-strip"><div class="container"><span><b>♧</b> Humano</span><span><b>◉</b> Cercano</span><span><b>◎</b> Basado en evidencia</span></div></section>`);
+  const founderImages = document.querySelectorAll('.founder img');
+  if (founderImages[1]) founderImages[1].src = 'assets/images/founder-2.jpg';
+
+  const founderCards = document.querySelectorAll('.founder');
+  const founderRoles = ['Fonoaudióloga · Magíster en Psicología · Instructora de yoga','Nutricionista · Instructora de yoga'];
+  founderCards.forEach((card,index) => {
+    card.classList.add(`founder-card-${index+1}`);
+    card.querySelector('.eyebrow').textContent = founderRoles[index];
+    card.insertAdjacentHTML('beforeend', `<span class="founder-symbol">${iconSvg(index === 0 ? 'users' : 'lotus')}</span>`);
+  });
+
+  const networkHeading = [...document.querySelectorAll('h2')].find(node => node.textContent.includes('Una red que hace posible'));
+  const networkSection = networkHeading?.closest('section');
+  networkSection?.classList.add('network-section');
+  networkSection?.querySelector('.container')?.classList.add('network-panel');
+  const networkLead = networkSection?.querySelector('.lead');
+  if (networkLead) networkLead.textContent = 'Además de sus fundadoras, Bienestar Presente cuenta con una red de profesionales y colaboradores que fortalece el diseño y la implementación de cada jornada, permitiendo responder con flexibilidad a las necesidades de cada organización.';
+  const networkIcons = ['users','puzzle','hand'];
+  networkSection?.querySelectorAll('.card-icon').forEach((icon,index) => icon.innerHTML = iconSvg(networkIcons[index]));
+
+  const guideHeading = [...document.querySelectorAll('h2')].find(node => node.textContent.trim() === 'Lo que nos guía');
+  const guideSection = guideHeading?.closest('section');
+  guideSection?.classList.add('guides-section');
+  const guideIcons = ['award','eye','leaf'];
+  const guideCopy = [
+    'Promover el bienestar integral de las personas y equipos, creando experiencias transformadoras que generen impacto positivo y sostenible en las organizaciones.',
+    'Ser referentes en bienestar organizacional en Latinoamérica, inspirando culturas laborales más humanas, conscientes y productivas.',
+    'Integramos ciencia, empatía y práctica para diseñar soluciones relevantes, medibles y adaptadas a las necesidades reales de cada organización.'
+  ];
+  guideSection?.querySelectorAll('.card').forEach((card,index) => {
+    card.querySelector('.card-icon').innerHTML = iconSvg(guideIcons[index]);
+    card.querySelector('p').textContent = guideCopy[index];
+  });
+  const values = guideSection?.querySelector('.values');
+  if (values) {
+    values.insertAdjacentHTML('beforebegin','<p class="values-label">Valores que sostienen nuestro trabajo</p>');
+    const valueIcons = ['award','heart','users','home','brain','lotus'];
+    values.querySelectorAll('.value').forEach((value,index) => value.insertAdjacentHTML('afterbegin', iconSvg(valueIcons[index])));
+  }
+
+  const commitmentHeading = [...document.querySelectorAll('.cta h2')].find(node => node.textContent.includes('Acompañamos'));
+  const commitment = commitmentHeading?.closest('.cta');
+  commitment?.classList.add('about-commitment');
+  commitmentHeading?.insertAdjacentHTML('beforebegin','<p class="eyebrow">Nuestro compromiso</p>');
+  const commitmentText = commitment?.querySelector('p:not(.eyebrow)');
+  if (commitmentText) commitmentText.innerHTML = '<span class="quote-mark">“</span> Creemos que cuando las personas están bien,<br>los equipos florecen y las organizaciones trascienden.<br>Hagamos del bienestar una decisión estratégica. <span class="quote-mark">”</span>';
+  const commitmentButton = commitment?.querySelector('.button');
+  if (commitmentButton) {
+    commitmentButton.textContent = 'Solicitar cotización →';
+    commitment.querySelector(':scope > div')?.append(commitmentButton);
+  }
+}
+if (current === 'contacto') {
+  const prepHeading = [...document.querySelectorAll('h2')].find(node => node.textContent.trim() === 'Antes de escribirnos');
+  prepHeading?.parentElement.insertAdjacentHTML('beforeend', `<div class="prep-grid"><span><b>♧</b>Tamaño del equipo</span><span><b>▣</b>Fecha o período</span><span><b>◎</b>Objetivos de la jornada</span><span><b>◈</b>Formato preferido</span><span><b>◷</b>Presupuesto referencial</span></div>`);
+}
+if (current === 'contacto') {
+  document.querySelector('.hero')?.classList.add('contact-hero');
+  const contactBadges = document.querySelector('.contact-hero .hero-badges');
+  if (contactBadges) contactBadges.innerHTML = `<span class="pill">${iconSvg('users')}<b>Atención<br>personalizada</b></span><span class="pill">${iconSvg('clock')}<b>Respuesta en<br>24–48 hrs</b></span><span class="pill">${iconSvg('group')}<b>Jornadas<br>presenciales</b></span>`;
+  const contactHeadings = [...document.querySelectorAll('h2')];
+  const zoneSection = contactHeadings.find(node => node.textContent.includes('Zona de'))?.closest('section');
+  zoneSection?.classList.add('zones-section');
+  const zoneCards = zoneSection?.querySelectorAll('.zones .card') || [];
+  ['building','pin','globe'].forEach((icon,index) => { const el = zoneCards[index]?.querySelector('.card-icon'); if (el) el.innerHTML = iconSvg(icon); });
+  if (zoneCards[1]) zoneCards[1].querySelector('h3').innerHTML = 'Atención principal:<br>Gran Concepción y Región del Biobío';
+  if (zoneCards[2]) { zoneCards[2].querySelector('h3').innerHTML = 'Otras zonas:<br>a evaluar según solicitud'; zoneCards[2].querySelector('p').textContent = 'Atendemos a organizaciones de otras regiones de Chile según el tipo de jornada y requerimientos.'; }
+  const prepHeading2 = contactHeadings.find(node => node.textContent.includes('Antes de escribirnos'));
+  const prepSection = prepHeading2?.closest('section');
+  prepSection?.classList.add('prep-section');
+  prepSection?.querySelector('.prep-grid')?.remove();
+  prepHeading2?.parentElement.insertAdjacentHTML('beforeend', `<div class="prep-grid"><span><b>${iconSvg('users')}</b>Tamaño del equipo<br>o área involucrada</span><span><b>${iconSvg('calendar')}</b>Fechas o período<br>estimado</span><span><b>${iconSvg('target')}</b>Objetivos de la<br>jornada</span><span><b>${iconSvg('pin')}</b>Formato preferido<br>(presencial o virtual)</span><span><b>${iconSvg('edit')}</b>Presupuesto<br>referencial (si hay)</span></div>`);
+  const formSection = document.querySelector('#contact-form')?.closest('section');
+  formSection?.classList.add('contact-main-section');
+  if (formSection && prepSection) prepSection.insertAdjacentElement('afterend', formSection);
+  formSection?.querySelector('.contact-layout > .card')?.classList.add('contact-form-card');
+  const privacy = formSection?.querySelector('.field.full:has(input[type="checkbox"])');
+  if (privacy) privacy.innerHTML = `<p class="privacy-note">♧ Tus datos están protegidos. Solo los utilizaremos para responder tu consulta.</p>`;
+  const submit = formSection?.querySelector('[type="submit"]');
+  if (submit) submit.innerHTML = '▷&nbsp;&nbsp; Solicitar propuesta';
+  const side = formSection?.querySelector('.contact-side');
+  side?.classList.add('direct-contact');
+  side?.insertAdjacentHTML('afterbegin','<h2>Hablemos directamente</h2>');
+  ['mail','phone','calendar'].forEach((icon,index) => side?.querySelectorAll('.contact-item:not(blockquote)')[index]?.insertAdjacentHTML('afterbegin', `<span class="contact-item-icon">${iconSvg(icon)}</span>`));
+  const contactHero = document.querySelector('.contact-hero');
+  if (contactHero && formSection && zoneSection && prepSection) {
+    contactHero.insertAdjacentElement('afterend', formSection);
+    formSection.insertAdjacentElement('afterend', zoneSection);
+    zoneSection.insertAdjacentElement('afterend', prepSection);
+  }
+}
+if (current === 'jornadas') {
+  document.body.classList.add('journeys-page');
+  const programs = document.querySelector('#programas');
+  programs?.classList.add('journey-programs');
+  programs?.querySelector('h2')?.insertAdjacentHTML('beforebegin','<p class="eyebrow">Experiencias transformadoras</p>');
+  programs?.querySelector('h2')?.insertAdjacentHTML('afterend','<p class="lead">Experiencias creadas para generar impacto real en las personas y los equipos.</p>');
+  const programInfo = [
+    {icon:'lotus',hours:'4 horas',text:'Mindfulness, manejo del estrés y atención plena para encontrar calma.'},
+    {icon:'leaf',hours:'6 horas',text:'Hábitos saludables, energía y balance para potenciar el bienestar integral.'},
+    {icon:'home',hours:'6 horas',text:'Entornos de trabajo conscientes y una cultura organizacional que inspira.'}
+  ];
+  programs?.querySelectorAll('.program-card').forEach((card,index) => {
+    card.classList.add(`journey-program-${index + 1}`);
+    const content = card.querySelector('.content');
+    content.querySelector('p').textContent = programInfo[index].text;
+    content.insertAdjacentHTML('afterbegin', `<span class="journey-program-icon">${iconSvg(programInfo[index].icon)}</span>`);
+    content.insertAdjacentHTML('beforeend', `<div class="journey-program-meta"><span>${iconSvg('clock')} ${programInfo[index].hours}</span><span>${iconSvg('monitor')} Presencial o virtual</span></div><a href="#journey-${index + 1}">Conocer más →</a>`);
+    if (index === 1) card.insertAdjacentHTML('afterbegin','<span class="recommended">★ Recomendada</span>');
+  });
+
+  const methodology = [...document.querySelectorAll('h2')].find(node => node.textContent.includes('metodolog'))?.closest('section');
+  methodology?.classList.add('methodology-section');
+  const methodIcons = ['search','target','users','chart','shield'];
+  const methodTitles = ['Diagnóstico','Diseño a medida','Ejecución experiencial','Medición y análisis','Sostenibilidad'];
+  const methodTexts = ['Evaluamos necesidades y objetivos de tu organización.','Creamos un plan personalizado y alineado a tu cultura y objetivos.','Facilitamos programas prácticos, participativos y de alto impacto.','Medimos resultados e impacto con indicadores clave.','Acompañamos para mantener y escalar el bienestar.'];
+  methodology?.querySelectorAll('.step').forEach((step,index) => { step.querySelector('b').innerHTML = `<span>${index + 1}</span>${iconSvg(methodIcons[index])}`; step.querySelector('h3').textContent=methodTitles[index]; step.querySelector('p').textContent=methodTexts[index]; });
+
+  const detailSection = document.querySelector('.journey-row')?.closest('section');
+  detailSection?.classList.add('journey-details');
+  const journeyLists = [
+    [['Qué incluye','Facilitación profesional','Materiales y guías','Espacios seguros','Recursos digitales'],['Actividades','Mindfulness guiado','Gestión del estrés','Atención plena en la rutina','Cierre y compromisos'],['Objetivos','Reducir el estrés','Mejorar el enfoque','Aumentar la claridad mental','Promover el autocuidado']],
+    [['Qué incluye','Facilitación profesional','Dinámicas participativas','Materiales y recursos','Cierre y reflexión'],['Actividades','Dinámicas de conexión','Comunicación consciente','Trabajo en equipo','Cierre y acuerdos'],['Objetivos','Mejorar la comunicación','Fortalecer la confianza','Alinear con propósito común','Impulsar la colaboración']],
+    [['Qué incluye','Facilitación profesional','Materiales y recursos','Evaluación de bienestar','Seguimiento opcional'],['Actividades','Movimiento consciente','Nutrición y energía','Gestión emocional','Plan personal de bienestar'],['Objetivos','Aumentar la energía','Fomentar hábitos saludables','Mejorar el bienestar físico y emocional','Promover el agotamiento']]
+  ];
+  detailSection?.querySelectorAll('.journey-row').forEach((row,index) => {
+    row.id=`journey-${index + 1}`;
+    const ul=row.querySelector('.checklist');
+    ul?.insertAdjacentHTML('afterend', `<div class="journey-columns">${journeyLists[index].map((col,ci)=>`<div><h3>${col[0]}</h3><ul>${col.slice(1).map(item=>`<li>${ci ? '✓' : '◉'} <span>${item}</span></li>`).join('')}</ul></div>`).join('')}</div>`);
+    ul?.remove();
+  });
+  const includesHeading = [...document.querySelectorAll('h2')].find(node => node.textContent.trim() === 'Qué incluye cada jornada');
+  includesHeading?.parentElement.querySelector('.grid')?.insertAdjacentHTML('beforeend', `<article class="card"><div class="card-icon">♧</div><h3>Dinámicas vivenciales</h3><p>Experiencias prácticas que generan impacto duradero.</p></article>`);
+  const includesSection = includesHeading?.closest('section');
+  includesSection?.classList.add('journey-includes');
+  const includeIcons=['users','clipboard','award','shield','group'];
+  includesSection?.querySelectorAll('.card').forEach((card,index)=>{card.querySelector('.card-icon').innerHTML=iconSvg(includeIcons[index]); if(index===3)card.querySelector('h3').textContent='Adaptación a tu organización';});
+  const comparison = document.querySelector('.comparison');
+  comparison?.closest('section')?.classList.add('journey-comparison');
+  const headers=comparison?.querySelectorAll('thead th') || [];
+  ['','lotus','brain','home'].forEach((icon,index)=>{if(index&&headers[index])headers[index].innerHTML=`<span>${iconSvg(icon)}</span>${headers[index].textContent}`;});
+  const rowIcons=['clock','target','users'];
+  comparison?.querySelectorAll('tbody th').forEach((th,index)=>th.innerHTML=`${iconSvg(rowIcons[index])}<span>${th.textContent}</span>`);
+}
+if (current === 'experiencias') {
+  document.querySelector('.hero')?.classList.add('experiences-hero');
+  const expBadges = document.querySelector('.experiences-hero .hero-badges');
+  if (expBadges) expBadges.innerHTML = `<span class="pill">${iconSvg('group')}<b>Jornadas<br>presenciales</b></span><span class="pill">${iconSvg('sliders')}<b>Experiencias<br>adaptadas</b></span><span class="pill">${iconSvg('quote')}<b>Testimonios<br>reales</b></span>`;
+  document.querySelectorAll('.experience').forEach((article,index) => {
+    article.style.setProperty('--experience-accent', ['#8c74cd','#3eaaa9','#3283ae'][index]);
+    const image = article.querySelector('.experience-main > img');
+    if (image) image.src = 'assets/images/journey-wellbeing.jpg';
+    image?.insertAdjacentHTML('beforebegin', `<span class="experience-number">0${index + 1}</span>`);
+    const content = article.querySelector('.experience-main > div');
+    content?.querySelector('.eyebrow')?.remove();
+    content?.querySelector('h2')?.insertAdjacentHTML('afterend','<span class="experience-type">Jornada Bienestar</span>');
+    const detail = article.querySelector('.experience-detail');
+    if (detail) detail.innerHTML = `<div class="detail-inner"><h3 tabindex="-1"><span>${iconSvg('lotus')}</span>Detalle de la experiencia</h3><h4>Qué trabajamos</h4><div class="detail-topics"><span>${iconSvg('heart')}Regulación emocional</span><span>${iconSvg('lotus')}Autocuidado</span><span>${iconSvg('leaf')}Respiración</span><span>${iconSvg('users')}Comunicación</span><span>${iconSvg('group')}Trabajo en equipo</span></div><h4>Galería</h4><div class="gallery"><img src="assets/images/journey-present.jpg" alt="Facilitación de la jornada"><img src="assets/images/journey-wellbeing.jpg" alt="Participantes durante la actividad"><img src="assets/images/journey-habitar.jpg" alt="Dinámica de cierre grupal"></div><h4>Testimonios</h4><div class="detail-testimonials"><blockquote>“Excelente jornada, muy dinámica y cercana. Nos ayudó a tomar conciencia de la importancia de cuidarnos para rendir mejor.”<cite>— Participante, Empresa B</cite></blockquote><blockquote>“La facilitadora generó un ambiente de confianza y participación. Salimos con herramientas concretas y aplicables.”<cite>— Participante, Institución C</cite></blockquote></div><a class="button button--aqua detail-cta" href="contacto.html">Solicitar una jornada similar →</a></div>`;
+  });
+  const quotes = [
+    'Fue una jornada muy transformadora. Nos llevamos herramientas concretas que ya estamos aplicando como equipo.',
+    'La experiencia creó un espacio seguro para detenernos, escucharnos y volver a conectar.',
+    'Las dinámicas fueron cercanas y aplicables; el equipo salió con acuerdos y prácticas sostenibles.'
+  ];
+  document.querySelectorAll('.experience-main > div').forEach((content, index) => {
+    const button = content.querySelector('.experience-toggle');
+    if (button) button.insertAdjacentHTML('beforebegin', `<blockquote class="experience-quote">“${quotes[index]}”<cite>— Área de Personas</cite></blockquote>`);
+  });
+}
+
+document.querySelector('[data-header]').innerHTML = `<header class="site-header"><div class="container nav-wrap"><a class="brand-logo" href="index.html" aria-label="Bienestar Presente, inicio"><img src="assets/images/brand-logo.jpg" alt="Bienestar Presente"></a><button class="nav-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="Abrir menú">☰</button><nav aria-label="Navegación principal"><ul class="nav-list" id="main-nav">${pages.map(([url, name]) => `<li><a href="${url}" ${current === name.toLowerCase() ? 'aria-current="page"' : ''}>${name}</a></li>`).join('')}<li><a class="button" href="contacto.html">Solicitar cotización</a></li></ul></nav></div></header>`;
+document.querySelector('[data-footer]').innerHTML = `<footer class="site-footer"><div class="container"><div class="footer-grid"><div><a class="logo" href="index.html"><span class="logo-mark">♧</span><span>Bienestar Presente</span></a><p>Jornadas presenciales de bienestar emocional y autocuidado para organizaciones.</p></div><div><h3>Navegación</h3><div class="footer-links">${pages.map(([url, name]) => `<a href="${url}">${name}</a>`).join('')}</div></div><div><h3>Contacto</h3><div class="footer-links"><a href="mailto:hola@bienestarpresente.cl">hola@bienestarpresente.cl</a><a href="tel:+56900000000">+56 9 0000 0000</a><span>Concepción, Chile</span></div></div><div><h3>Atención</h3><p>Lunes a viernes<br>09:00 a 18:00 hrs</p><p>Respuesta en 24 a 48 horas hábiles.</p></div></div><div class="copyright">© 2026 Bienestar Presente. Todos los derechos reservados.</div></div></footer>`;
+
+const toggle = document.querySelector('.nav-toggle');
+const nav = document.querySelector('.nav-list');
+toggle.addEventListener('click', () => {
+  const open = toggle.getAttribute('aria-expanded') === 'true';
+  toggle.setAttribute('aria-expanded', String(!open));
+  toggle.textContent = open ? '☰' : '×';
+  nav.classList.toggle('open', !open);
+});
+
+document.querySelectorAll('.experience-toggle').forEach(button => button.addEventListener('click', () => {
+  const detail = document.getElementById(button.getAttribute('aria-controls'));
+  const open = button.getAttribute('aria-expanded') === 'true';
+  button.setAttribute('aria-expanded', String(!open));
+  button.textContent = open ? 'Ver experiencia' : 'Cerrar detalle';
+  detail.hidden = open;
+  if (!open) detail.querySelector('h3')?.focus();
+}));
+
+const form = document.querySelector('#contact-form');
+if (form) {
+  const status = form.querySelector('.form-status');
+  form.querySelector('[type="submit"]').addEventListener('click', () => {
+    if (!form.checkValidity()) status.textContent = 'Revisa los campos obligatorios indicados antes de enviar.';
+  });
+  form.addEventListener('invalid', () => { status.textContent = 'Revisa los campos obligatorios indicados antes de enviar.'; }, { capture: true });
+  form.addEventListener('input', () => { if (form.checkValidity()) status.textContent = ''; });
+  form.addEventListener('submit', event => {
+    event.preventDefault();
+    status.textContent = 'Gracias. Tu consulta quedó preparada; conectaremos el envío cuando exista un backend.';
+    form.reset();
+  });
+}
