@@ -1201,8 +1201,8 @@ body[data-page="jornadas"] .section .grid-4:has(.card:nth-child(5)) {
 .org-logo {
   display: grid;
   place-items: center;
-  width: 2.4rem;
-  height: 2.4rem;
+  width: 5rem;
+  height: 5rem;
   border-radius: 50%;
   background: #f5f6f8;
   color: #637084;
@@ -1214,7 +1214,7 @@ body[data-page="jornadas"] .section .grid-4:has(.card:nth-child(5)) {
   height: 1.45rem;
 }
 .home-hero .trusted > div {
-  gap: 0.8rem;
+  gap: clamp(1.4rem, 3vw, 2.5rem);
   flex-wrap: nowrap;
 }
 .home-hero .trusted .trusted-org {
@@ -1226,7 +1226,7 @@ body[data-page="jornadas"] .section .grid-4:has(.card:nth-child(5)) {
   white-space: nowrap;
 }
 .benefit-strip {
-  padding: 1.2rem 0;
+  padding: 3.5rem 0 1.2rem 0;
   background: #fff;
   border-top: 0;
 }
@@ -3979,6 +3979,425 @@ body[data-page="experiencias"] .experience-toggle.button--ghost:hover {
   }
 }
 
+/* Refinamientos responsive para tablet compacta (770 px a 930 px). */
+@media (min-width: 48.125rem) and (max-width: 58.125rem) {
+  /* Jornadas: distribucion 3 + 2 centrada en Que incluye cada jornada. */
+  .journey-includes .grid {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 0;
+    row-gap: 2rem;
+  }
+  .journey-includes .card {
+    flex: 0 0 33.3333%;
+    min-width: 0;
+  }
+  .journey-includes .card:nth-child(1) {
+    grid-column: auto;
+  }
+  .journey-includes .card:nth-child(2) {
+    grid-column: auto;
+  }
+  .journey-includes .card:nth-child(3) {
+    grid-column: auto;
+    border-right: 0;
+  }
+  .journey-includes .card:nth-child(4) {
+    grid-column: auto;
+    margin-left: 16.6667%;
+    border-right: 1px solid var(--line);
+  }
+  .journey-includes .card:nth-child(5) {
+    grid-column: auto;
+    border-right: 0;
+  }
+
+  /* Contacto: las dos tarjetas comparten altura y la cita ocupa el remanente. */
+  .contact-main-section > .contact-layout {
+    align-items: stretch;
+  }
+  .direct-contact {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  .direct-contact blockquote.contact-item {
+    flex: 1 1 auto;
+    width: 100%;
+    min-height: 10rem;
+    padding: 1.5rem 1rem;
+  }
+}
+
+/* Inicio: conserva ambos CTA en una sola linea en el limite de tablet. */
+@media (min-width: 48.0625rem) and (max-width: 50.125rem) {
+  .home-hero .hero-actions {
+    flex-wrap: nowrap;
+    gap: 0.45rem;
+  }
+  .home-hero .hero-actions .button {
+    width: auto;
+    min-width: 0;
+    padding-inline: 0.8rem;
+    font-size: 0.75rem;
+    white-space: nowrap;
+  }
+}
+
+/* Footer de tablet: marca centrada arriba e informacion en tres columnas abajo. */
+@media (min-width: 48.125rem) and (max-width: 64rem) {
+  .site-footer .footer-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    row-gap: 2rem;
+  }
+  .site-footer .footer-grid > section,
+  .site-footer .footer-grid > section:nth-child(n) {
+    min-width: 0;
+    padding: 0 1.25rem;
+  }
+  .site-footer .footer-grid > .footer-brand {
+    grid-column: 1 / -1;
+    padding: 0 0 2rem;
+    border: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.42);
+    text-align: center;
+  }
+  .site-footer .footer-grid > section:nth-child(2) {
+    padding-left: 0;
+    border-left: 0;
+  }
+  .site-footer .footer-grid > section:nth-child(4) {
+    padding-right: 0;
+  }
+  .site-footer .footer-grid > section:nth-child(3),
+  .site-footer .footer-grid > section:nth-child(4) {
+    border-left: 1px solid rgba(255, 255, 255, 0.42);
+  }
+  .site-footer .footer-brand-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-inline: auto;
+  }
+  .site-footer .footer-brand-icon,
+  .site-footer .footer-brand-link span {
+    grid-column: auto;
+  }
+  .site-footer .footer-brand > p {
+    margin-inline: auto;
+    text-align: center;
+  }
+  .site-footer .footer-socials {
+    justify-content: center;
+  }
+}
+
+/* Footer en escritorio intermedio: columnas informativas ligeramente a la izquierda. */
+@media (min-width: 64.0625rem) and (max-width: 70.9375rem) {
+  .site-footer .footer-grid {
+    grid-template-columns: 1.05fr 0.85fr 1.15fr 1.3fr;
+  }
+  .site-footer .footer-grid > section {
+    padding-inline: 1.25rem;
+  }
+  .site-footer .footer-grid > section:first-child {
+    padding-left: 0;
+  }
+  .site-footer .footer-grid > section:last-child {
+    padding-right: 0;
+  }
+  .site-footer .footer-brand > p {
+    max-width: 15rem;
+  }
+}
+
+/* Ajustes de tablet horizontal y tablet compacta (770 px a 930 px). */
+@media (min-width: 48.125rem) and (max-width: 58.125rem) {
+  /* El header de escritorio se compacta para no generar desborde en tablet. */
+  .nav-wrap {
+    gap: 0.5rem;
+  }
+  .brand-logo {
+    gap: 0.4rem;
+    font-size: var(--fs-xs);
+  }
+  .brand-logo img {
+    width: 3rem;
+    height: 3rem;
+    flex-basis: 3rem;
+  }
+  .nav-list {
+    gap: 0.35rem;
+  }
+  .nav-list a:not(.button) {
+    padding-inline: 0.35rem;
+    font-size: var(--fs-xs);
+  }
+  .nav-list .button {
+    min-width: 0;
+    padding-inline: 1rem;
+    font-size: var(--fs-xs);
+  }
+
+  /* En las tarjetas de programas, cada dato ocupa su propia linea. */
+  .journey-programs .journey-program-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+  }
+
+  /* Inicio: tres etapas arriba y las dos finales centradas debajo. */
+  body[data-page="inicio"] .steps {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    column-gap: 0.75rem;
+    row-gap: 2.5rem;
+  }
+  body[data-page="inicio"] .process-connector {
+    display: none;
+  }
+  body[data-page="inicio"] .steps::before {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    display: block;
+    left: 16.666%;
+    right: 16.666%;
+    top: 3.6rem;
+    height: 1rem;
+    border-top: 0.16rem solid #4666b5;
+    border-radius: 50%;
+    background: transparent;
+  }
+  body[data-page="inicio"] .step {
+    position: relative;
+  }
+  body[data-page="inicio"] .step:nth-of-type(1) {
+    grid-column: 1 / 3;
+  }
+  body[data-page="inicio"] .step:nth-of-type(2) {
+    grid-column: 3 / 5;
+  }
+  body[data-page="inicio"] .step:nth-of-type(3) {
+    grid-column: 5 / 7;
+  }
+  body[data-page="inicio"] .step:nth-of-type(4) {
+    grid-column: 2 / 4;
+  }
+  body[data-page="inicio"] .step:nth-of-type(5) {
+    grid-column: 4 / 6;
+  }
+  body[data-page="inicio"] .step:nth-of-type(4)::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 3.25rem;
+    left: calc(50% + 3.5rem);
+    width: calc(100% - 7rem);
+    height: 1.15rem;
+    border-top: 0.16rem solid #2872b1;
+    border-radius: 50%;
+  }
+
+  /* Nosotras: atributos directamente bajo la imagen del hero. */
+  body[data-page="nosotras"] .trait-strip {
+    margin-top: -0.45rem;
+    padding: 0.45rem 0 1rem;
+  }
+  body[data-page="nosotras"] .trait-strip .container {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: 52%;
+    margin-right: 0;
+    margin-left: auto;
+    gap: 0.5rem;
+  }
+  body[data-page="nosotras"] .trait-strip span {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    min-width: 0;
+    text-align: center;
+    font-size: var(--fs-xs);
+    line-height: 1.25;
+  }
+
+  /* Nosotras: red profesional con jerarquia vertical y separadores claros. */
+  .network-panel {
+    padding: 2rem 1.5rem;
+  }
+  .network-panel .card {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto 1fr;
+    justify-items: center;
+    align-content: start;
+    min-width: 0;
+    min-height: 15rem;
+    padding: 0 1rem;
+    text-align: center;
+  }
+  .network-panel .card-icon {
+    grid-row: auto;
+    margin: 0 auto 0.75rem;
+  }
+  .network-panel .card h3,
+  .network-panel .card p {
+    align-self: auto;
+  }
+  .network-panel .card h3 {
+    min-height: 2.7rem;
+    margin-bottom: 0.45rem;
+  }
+
+  /* Contacto y Experiencias: icono arriba, etiqueta debajo. */
+  .contact-hero .hero-badges,
+  .experiences-hero .hero-badges {
+    width: 100%;
+    max-width: 34rem;
+    margin-right: 0;
+  }
+  .contact-hero .pill,
+  .experiences-hero .pill {
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.45rem;
+    min-width: 0;
+    padding: 0.45rem 0.35rem;
+    text-align: center;
+    white-space: normal;
+  }
+  .contact-hero .pill + .pill,
+  .experiences-hero .pill + .pill {
+    border-top: 0;
+    border-left: 1px solid var(--line);
+  }
+  .contact-hero .pill b,
+  .experiences-hero .pill b {
+    font-size: var(--fs-xs);
+    line-height: 1.25;
+  }
+
+  /* Contacto: canales y zonas legibles dentro de columnas estrechas. */
+  .direct-contact .contact-item:not(blockquote) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 8.5rem;
+    padding: 1.15rem 0.7rem;
+    text-align: center;
+  }
+  .direct-contact .contact-item:not(blockquote) .contact-item-icon {
+    position: static;
+    margin-bottom: 0.55rem;
+  }
+  .direct-contact .contact-item a,
+  .direct-contact .contact-item p {
+    max-width: 100%;
+    margin-top: 0.25rem;
+    overflow-wrap: anywhere;
+  }
+  .zones-section .card {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto 1fr;
+    justify-items: center;
+    align-content: start;
+    min-height: 16rem;
+    padding: 1.25rem 1rem;
+    text-align: center;
+  }
+  .zones-section .card-icon {
+    grid-row: auto;
+    margin: 0 auto 0.7rem;
+  }
+  .zones-section .card h3,
+  .zones-section .card p {
+    align-self: auto;
+  }
+  .zones-section .card h3 {
+    min-height: 4.2rem;
+    margin-bottom: 0.45rem;
+  }
+
+  /* Jornadas: metodologia en esquema 3 + 2, con ambos recorridos unidos. */
+  .methodology-section .steps {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    column-gap: 0.75rem;
+    row-gap: 2.8rem;
+  }
+  .methodology-section .step {
+    position: relative;
+  }
+  .methodology-section .step:nth-child(1) {
+    grid-column: 1 / 3;
+  }
+  .methodology-section .step:nth-child(2) {
+    grid-column: 3 / 5;
+  }
+  .methodology-section .step:nth-child(3) {
+    grid-column: 5 / 7;
+  }
+  .methodology-section .step:nth-child(4) {
+    grid-column: 2 / 4;
+  }
+  .methodology-section .step:nth-child(5) {
+    grid-column: 4 / 6;
+  }
+  .methodology-section .step:nth-child(4)::after {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    top: 2.25rem;
+    left: calc(50% + 2.25rem);
+    width: calc(100% - 4.5rem);
+    height: 0.9rem;
+    border-top: 0.14rem solid #6250b7;
+    border-radius: 50%;
+  }
+  .methodology-section .step b,
+  .methodology-section .step h3,
+  .methodology-section .step p {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Jornadas: primera columna mas compacta y encabezado alineado. */
+  .journey-comparison table {
+    min-width: 46rem;
+  }
+  .journey-comparison thead th:first-child {
+    width: 9rem;
+    text-align: left;
+  }
+  .journey-comparison tbody th {
+    gap: 0.55rem;
+  }
+
+  /* La segunda experiencia inicia imagen y contenido en la misma linea. */
+  body[data-page="experiencias"] .experience:nth-child(2) .experience-main {
+    align-items: start;
+  }
+}
+
+/* Nosotras: baja ligeramente los atributos bajo el hero en escritorio mediano. */
+@media (min-width: 72.5rem) and (max-width: 84.375rem) {
+  body[data-page="nosotras"] .trait-strip {
+    margin-top: -4rem;
+  }
+}
+
+/* Margen lateral de los hero en tablet y escritorio intermedio. */
+@media (min-width: 48.063rem) and (max-width: 76.25rem) {
+  .hero .hero-copy {
+    padding-left: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  /* En Inicio el contenido participa directamente en la cuadrícula. */
+  .home-hero .hero-copy > * {
+    padding-left: clamp(1.5rem, 3vw, 2.5rem);
+  }
+}
+
 .hero-copy .hero-kicker {
   color: #5234af;
 }
@@ -4079,16 +4498,16 @@ body[data-page] .cta.about-commitment .button {
 
 /* Ajustes finales de espaciado y composición responsive. */
 .home-hero .hero-copy > h1 {
-  /*margin-bottom: 0.6rem;*/
+  margin-bottom: 1.6rem;
 }
 .home-hero .hero-copy > p:not(.hero-kicker) {
-  /*margin-bottom: 0.55rem;*/
+  margin-bottom: 1rem;
 }
 .home-hero .hero-actions {
-  margin-top: 0.55rem;
+  margin-top: 1rem;
 }
 .home-hero .trusted {
-  margin-top: 0.65rem;
+  margin-top: 1.5rem;
 }
 
 @media (max-width: 48.125rem) {
@@ -4403,7 +4822,7 @@ body[data-page] .cta.about-commitment .button {
 
 @media (min-width: 48.01rem) {
   .home-hero .hero-grid {
-    grid-template-columns: minmax(0, 3fr) minmax(20rem, 2fr);
+    grid-template-columns: minmax(0, 2fr) minmax(20rem, 2fr);
   }
   .home-hero .hero-media {
     position: relative;
@@ -4418,5 +4837,22 @@ body[data-page] .cta.about-commitment .button {
     height: 100%;
     min-height: 0;
     object-fit: cover;
+  }
+}
+
+/* Nosotras: atributos inmediatamente debajo de la imagen en tablet compacta. */
+@media (min-width: 48.125rem) and (max-width: 58.125rem) {
+  body[data-page="nosotras"] .trait-strip {
+    height: 0;
+    margin: 0;
+    padding: 0;
+    border-bottom: 0;
+    overflow: visible;
+  }
+  body[data-page="nosotras"] .trait-strip .container {
+    transform: translateY(-9rem);
+  }
+  body[data-page="nosotras"] .trait-strip::after {
+    display: none;
   }
 }
