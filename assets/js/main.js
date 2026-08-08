@@ -5,21 +5,43 @@ const navToggle = document.querySelector('.nav-toggle');
 const navList = document.querySelector('.nav-list');
 
 if (navToggle && navList) {
+  const navBackdrop = document.createElement('button');
+  navBackdrop.type = 'button';
+  navBackdrop.className = 'mobile-nav-backdrop';
+  navBackdrop.setAttribute('aria-label', 'Cerrar menú');
+  navBackdrop.hidden = true;
+  document.body.appendChild(navBackdrop);
+
+  const setMobileMenuState = isOpen => {
+    navToggle.setAttribute('aria-expanded', String(isOpen));
+    navToggle.textContent = isOpen ? '×' : '☰';
+    navToggle.setAttribute('aria-label', isOpen ? 'Cerrar menú' : 'Abrir menú');
+    navList.classList.toggle('open', isOpen);
+    document.body.classList.toggle('mobile-nav-open', isOpen);
+    navBackdrop.hidden = !isOpen;
+  };
+
   navToggle.addEventListener('click', () => {
     const isOpen = navToggle.getAttribute('aria-expanded') === 'true';
-    navToggle.setAttribute('aria-expanded', String(!isOpen));
-    navToggle.textContent = isOpen ? '☰' : '×';
-    navToggle.setAttribute('aria-label', isOpen ? 'Abrir menú' : 'Cerrar menú');
-    navList.classList.toggle('open', !isOpen);
+    setMobileMenuState(!isOpen);
   });
 
   navList.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      navToggle.setAttribute('aria-expanded', 'false');
-      navToggle.textContent = '☰';
-      navToggle.setAttribute('aria-label', 'Abrir menú');
-      navList.classList.remove('open');
-    });
+    link.addEventListener('click', () => setMobileMenuState(false));
+  });
+
+  navBackdrop.addEventListener('click', () => setMobileMenuState(false));
+
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && navList.classList.contains('open')) {
+      setMobileMenuState(false);
+      navToggle.focus();
+    }
+  });
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth <= 770) return;
+    setMobileMenuState(false);
   });
 }
 

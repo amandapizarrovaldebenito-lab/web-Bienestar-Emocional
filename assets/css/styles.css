@@ -125,6 +125,11 @@ p {
 .center .lead {
   margin-inline: auto;
 }
+
+.p-cta {
+  color: #ffffff;
+}
+
 /*
  * Sistema de botones
  * - .button / .button--primary: conversión principal.
@@ -3930,7 +3935,7 @@ body[data-page="experiencias"] .experience-toggle.button--ghost:hover {
 
 @media (min-width: 48.01rem) {
   .home-hero .hero-grid {
-    grid-template-columns: minmax(0, 3fr) minmax(20rem, 2fr);
+    grid-template-columns: minmax(0, 2fr) minmax(20rem, 2fr);
     grid-template-rows: auto auto auto auto auto;
     column-gap: clamp(1.5rem, 3vw, 3rem);
     row-gap: 0;
@@ -3983,4 +3988,435 @@ body[data-page="experiencias"] .experience-toggle.button--ghost:hover {
 body[data-page="nosotras"] .trait-strip,
 body[data-page="nosotras"] .trait-strip .container {
   pointer-events: none;
+}
+
+/* Identidad textual compartida del header. */
+.brand-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  width: auto;
+  min-width: max-content;
+  color: #102a56;
+  font-family: Arial, sans-serif;
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  line-height: 1.15;
+}
+.brand-logo img {
+  width: 3.5rem;
+  height: 3.5rem;
+  flex: 0 0 3.5rem;
+  object-fit: contain;
+}
+
+/* CTA final homologado en todas las páginas. */
+body[data-page] .cta.about-commitment {
+  position: relative;
+  min-height: 22rem;
+  padding: 2.3rem 4.5rem;
+  border: 1px solid #eee8f2;
+  border-radius: 1.2rem;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(250, 247, 252, 0.99) 0 44%,
+      rgba(250, 247, 252, 0.82) 51%,
+      rgba(250, 247, 252, 0.08) 69%
+    ),
+    url("../../imagenes/imagenes/pagina nosotras/fundadoras.png") right
+      center/58% 100% no-repeat;
+  color: #102a56;
+  overflow: hidden;
+}
+body[data-page] .cta.about-commitment > div {
+  max-width: 46%;
+}
+body[data-page] .cta.about-commitment h2 {
+  max-width: 31rem;
+  margin-bottom: 0.55rem;
+  color: #102a56;
+}
+body[data-page] .cta.about-commitment p:not(.eyebrow) {
+  color: #102a56;
+}
+body[data-page] .cta.about-commitment .button {
+  margin-top: 0.8rem;
+}
+
+@media (max-width: 48rem) {
+  .brand-logo {
+    min-width: 0;
+  }
+  .brand-logo img {
+    width: 3rem;
+    height: 3rem;
+    flex-basis: 3rem;
+  }
+  body[data-page] .cta.about-commitment {
+    min-height: 20rem;
+    padding: 2rem;
+    background:
+      linear-gradient(rgba(16, 42, 86, 0.86), rgba(16, 42, 86, 0.86)),
+      url("../../imagenes/imagenes/pagina nosotras/fundadoras.png") center/cover;
+    color: #ffffff;
+  }
+  body[data-page] .cta.about-commitment > div {
+    max-width: none;
+  }
+  body[data-page] .cta.about-commitment h2,
+  body[data-page] .cta.about-commitment p:not(.eyebrow) {
+    color: #ffffff;
+  }
+}
+
+@media (max-width: 35rem) {
+  .brand-logo span {
+    max-width: 7rem;
+    white-space: normal;
+  }
+}
+
+/* Ajustes finales de espaciado y composición responsive. */
+.home-hero .hero-copy > h1 {
+  /*margin-bottom: 0.6rem;*/
+}
+.home-hero .hero-copy > p:not(.hero-kicker) {
+  /*margin-bottom: 0.55rem;*/
+}
+.home-hero .hero-actions {
+  margin-top: 0.55rem;
+}
+.home-hero .trusted {
+  margin-top: 0.65rem;
+}
+
+@media (max-width: 48.125rem) {
+  body.mobile-nav-open {
+    overflow: hidden;
+  }
+  .mobile-nav-backdrop {
+    position: fixed;
+    inset: 4.5rem 0 0;
+    z-index: 18;
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: rgba(82, 97, 118, 0.48);
+    backdrop-filter: blur(0.08rem);
+    cursor: pointer;
+  }
+  .mobile-nav-backdrop[hidden] {
+    display: none;
+  }
+  .site-header {
+    height: 4.5rem;
+    z-index: 20;
+  }
+  .nav-wrap {
+    gap: 0.75rem;
+  }
+  .nav-toggle {
+    display: grid;
+    place-items: center;
+    width: 3.25rem;
+    height: 3.25rem;
+    margin-left: auto;
+    margin-right: -0.55rem;
+    padding: 0;
+    font-size: 2.05rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .nav-toggle:focus-visible {
+    border-radius: 0.5rem;
+    outline: 0.18rem solid #3bafbd;
+    outline-offset: 0.12rem;
+  }
+  .nav-list {
+    display: none;
+    position: absolute;
+    z-index: 22;
+    top: 4.5rem;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    background: #ffffff;
+    padding: 0.8rem 1.15rem 1.25rem;
+    border-radius: 0 0 1.35rem 1.35rem;
+    box-shadow: 0 0.9rem 1.8rem rgba(16, 42, 86, 0.16);
+  }
+  .nav-list.open {
+    display: flex;
+  }
+  .nav-list .button {
+    width: 100%;
+  }
+  .nav-list li:last-child {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+  .nav-list li:last-child .button {
+    width: min(100%, 21rem);
+  }
+}
+
+@media (max-width: 31.25rem) {
+  /* En todos los hero la imagen abre la composición y el contenido sigue debajo. */
+  .hero {
+    padding: 1rem 0 2.25rem;
+  }
+  .hero .hero-grid,
+  .home-hero .hero-grid,
+  .contact-hero .hero-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  .hero .hero-media,
+  .home-hero .hero-media,
+  .contact-hero .hero-media {
+    order: -1;
+    width: 100%;
+    height: 18rem;
+    min-height: 0;
+    margin: 0;
+    border-radius: 0 0 4.5rem 0;
+  }
+  .hero .hero-media img,
+  .home-hero .hero-media img,
+  .contact-hero .hero-media img {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    object-fit: cover;
+  }
+  .hero .hero-copy {
+    width: 100%;
+    padding: 0 1rem;
+  }
+  .home-hero .hero-copy > h1 {
+    margin-bottom: 0.55rem;
+  }
+  .home-hero .hero-actions {
+    gap: 0.55rem;
+    margin-top: 0.55rem;
+  }
+  .home-hero .hero-actions .button {
+    width: 100%;
+  }
+  .home-hero .trusted {
+    margin-top: 0.7rem;
+  }
+  body[data-page="nosotras"] .hero-copy > .button {
+    width: min(100%, 18rem);
+  }
+
+  /* Tres atributos de Nosotras: icono arriba y texto debajo. */
+  body[data-page="nosotras"] .trait-strip {
+    margin-top: 0;
+    padding: 1rem 0;
+  }
+  body[data-page="nosotras"] .trait-strip .container {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: start;
+    gap: 0.45rem;
+    padding-left: 0;
+  }
+  body[data-page="nosotras"] .trait-strip span {
+    display: flex;
+    flex: initial;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    min-width: 0;
+    text-align: center;
+    font-size: var(--fs-xs);
+    line-height: 1.25;
+  }
+  body[data-page="nosotras"] .trait-strip b {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  /* Insignias de Experiencias y Contacto: tres columnas con icono superior. */
+  .experiences-hero .hero-badges,
+  .contact-hero .hero-badges {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+    width: 100%;
+    max-width: none;
+    margin-top: 1.25rem;
+  }
+  .experiences-hero .pill,
+  .contact-hero .pill {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.5rem;
+    min-width: 0;
+    padding: 0.45rem 0.3rem;
+    border-top: 0 !important;
+    text-align: center;
+    white-space: normal;
+  }
+  .experiences-hero .pill + .pill,
+  .contact-hero .pill + .pill {
+    border-left: 1px solid var(--line);
+  }
+  .experiences-hero .pill b,
+  .contact-hero .pill b {
+    font-size: 0.75rem;
+    line-height: 1.25;
+  }
+
+  /* Tarjetas explicativas de Jornadas. */
+  .journey-details .container {
+    width: min(calc(100% - 2rem), var(--max));
+  }
+  .journey-details .journey-row,
+  .journey-details .journey-row:nth-child(even) {
+    width: 100%;
+    margin-inline: auto;
+  }
+  .journey-details .journey-row > div,
+  .journey-details .journey-row:nth-child(even) > div {
+    width: 100%;
+    padding: 1.1rem;
+  }
+  .journey-details .journey-row h2 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.45rem;
+  }
+  .journey-details .journey-row h2 .pill {
+    display: inline-flex;
+    width: max-content;
+    max-width: 100%;
+    margin: 0;
+  }
+  .journey-columns {
+    grid-template-columns: 1fr;
+  }
+  .journey-details .button {
+    width: 100%;
+    min-width: 0;
+  }
+
+  /* Comparador compacto, segmentado y desplazable sin cortar contenido. */
+  .journey-comparison .comparison {
+    margin-inline: 0;
+    border-radius: 0.85rem;
+    overscroll-behavior-inline: contain;
+    scrollbar-color: #8864d5 #edf8fa;
+  }
+  .journey-comparison table {
+    width: 44rem;
+    min-width: 44rem;
+  }
+  .journey-comparison th,
+  .journey-comparison td {
+    padding: 0.8rem 0.65rem;
+    font-size: var(--fs-xs);
+    line-height: 1.35;
+  }
+  .journey-comparison thead th:first-child {
+    width: 10.5rem;
+  }
+  .journey-comparison thead th {
+    font-size: 1rem;
+  }
+  .journey-comparison thead th span {
+    width: 3.8rem;
+    height: 3.8rem;
+  }
+  .journey-comparison thead th span .line-icon,
+  .journey-comparison thead th span > img {
+    width: 2.55rem;
+    height: 2.55rem;
+  }
+  .journey-comparison tbody th > img {
+    width: 1.7rem;
+    height: 1.7rem;
+    margin-right: 0.4rem;
+  }
+  .journey-comparison thead th:first-child,
+  .journey-comparison tbody th {
+    position: sticky;
+    left: 0;
+    z-index: 2;
+    background: #ffffff;
+  }
+  .journey-comparison thead th:first-child {
+    z-index: 3;
+  }
+
+  /* Footer centrado en una sola columna. */
+  .site-footer {
+    text-align: center;
+  }
+  .site-footer .footer-grid > section,
+  .site-footer .footer-grid > section:nth-child(n) {
+    text-align: center;
+  }
+  .footer-brand-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    justify-items: center;
+    margin-inline: auto;
+  }
+  .footer-brand-icon,
+  .footer-brand-link span {
+    grid-column: auto;
+  }
+  .footer-brand > p {
+    margin-inline: auto;
+  }
+  .site-footer .footer-title::after {
+    margin-inline: auto;
+  }
+  .site-footer .footer-links a {
+    justify-content: center;
+  }
+  .footer-info-list {
+    justify-items: center;
+  }
+  .site-footer .footer-info {
+    grid-template-columns: 1.55rem minmax(0, auto);
+    justify-content: center;
+    text-align: left;
+  }
+  .site-footer .copyright {
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+@media (min-width: 48.01rem) {
+  .home-hero .hero-grid {
+    grid-template-columns: minmax(0, 3fr) minmax(20rem, 2fr);
+  }
+  .home-hero .hero-media {
+    position: relative;
+    height: auto;
+    min-height: 0;
+    align-self: stretch;
+  }
+  .home-hero .hero-media img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    object-fit: cover;
+  }
 }
