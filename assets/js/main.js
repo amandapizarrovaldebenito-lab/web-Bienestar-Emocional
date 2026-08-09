@@ -1,6 +1,40 @@
 // Este archivo contiene solo comportamiento. Todo el contenido y los textos
 // visibles del sitio se encuentran directamente en los archivos HTML.
 
+// Mantiene las URL limpias cuando el sitio se sirve por HTTP y permite revisar
+// las mismas páginas abriendo index.html directamente desde el explorador.
+const isLocalFilePreview = window.location.protocol === "file:";
+const isNestedPage = /\/(nosotras|jornadas|experiencias|contacto)\/index\.html$/i.test(
+  window.location.pathname.replace(/\\/g, "/"),
+);
+const siteRootUrl = isLocalFilePreview
+  ? new URL(isNestedPage ? "../" : "./", window.location.href)
+  : new URL("/", window.location.origin);
+
+const resolveSiteAsset = (path) =>
+  new URL(path.replace(/^\/+/, ""), siteRootUrl).href;
+
+if (isLocalFilePreview) {
+  const localPages = new Map([
+    ["/", "index.html"],
+    ["/nosotras/", "nosotras/index.html"],
+    ["/jornadas/", "jornadas/index.html"],
+    ["/experiencias/", "experiencias/index.html"],
+    ["/contacto/", "contacto/index.html"],
+  ]);
+
+  document.querySelectorAll('a[href^="/"]').forEach((link) => {
+    const cleanHref = new URL(link.getAttribute("href"), "https://local.invalid");
+    const localPath = localPages.get(cleanHref.pathname);
+    if (!localPath) return;
+
+    const localHref = new URL(localPath, siteRootUrl);
+    localHref.search = cleanHref.search;
+    localHref.hash = cleanHref.hash;
+    link.href = localHref.href;
+  });
+}
+
 const navToggle = document.querySelector(".nav-toggle");
 const navList = document.querySelector(".nav-list");
 
@@ -60,8 +94,12 @@ document.querySelectorAll(".experience-toggle").forEach((button) => {
       label.textContent = wasOpen ? "Ver experiencia" : "Cerrar detalle";
     if (icon) {
       icon.src = wasOpen
-        ? "imagenes/iconos/pagina%20experiencias/keyboard_arrow_down_24dp_102A56_FILL0_wght500_GRAD0_opsz24 (1).svg"
-        : "imagenes/iconos/pagina%20experiencias/keyboard_arrow_up_24dp_102A56_FILL0_wght500_GRAD0_opsz24.svg";
+        ? resolveSiteAsset(
+            "imagenes/iconos/pagina%20experiencias/keyboard_arrow_down_24dp_102A56_FILL0_wght500_GRAD0_opsz24 (1).svg",
+          )
+        : resolveSiteAsset(
+            "imagenes/iconos/pagina%20experiencias/keyboard_arrow_up_24dp_102A56_FILL0_wght500_GRAD0_opsz24.svg",
+          );
     }
     detail.hidden = wasOpen;
 

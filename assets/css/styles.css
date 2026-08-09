@@ -4029,6 +4029,47 @@ body[data-page="experiencias"] .experience-toggle.button--ghost:hover {
   }
 }
 
+/* Alineación final de la marca del footer y pie adherido al viewport. */
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+body > main {
+  flex: 1 0 auto;
+}
+.site-footer {
+  flex-shrink: 0;
+}
+.site-footer .footer-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.site-footer .footer-brand-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-inline: auto;
+  gap: 0.55rem;
+}
+.site-footer .footer-brand-link span {
+  color: #ffffff;
+  font-family: "DM Sans", Arial, sans-serif;
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.site-footer .footer-brand > p {
+  margin: 1rem auto 1.1rem;
+  text-align: center;
+}
+
 /* Inicio: conserva ambos CTA en una sola linea en el limite de tablet. */
 @media (min-width: 48.0625rem) and (max-width: 50.125rem) {
   .home-hero .hero-actions {
@@ -4427,6 +4468,24 @@ body[data-page="nosotras"] .trait-strip .container {
   height: 3.5rem;
   flex: 0 0 3.5rem;
   object-fit: contain;
+}
+.brand-logo .brand-name {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 0;
+  line-height: 1.05;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.brand-logo .brand-name__jornadas {
+  color: #4d2b99;
+}
+.brand-logo .brand-name__bienestar {
+  color: #0456b5;
+}
+
+.footer-brand-link span {
+  color: #ffffff;
 }
 
 /* CTA final homologado en todas las páginas. */
