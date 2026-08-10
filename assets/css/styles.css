@@ -4537,7 +4537,7 @@ body[data-page] .cta.about-commitment .button {
     background:
       linear-gradient(rgba(16, 42, 86, 0.86), rgba(16, 42, 86, 0.86)),
       url("../../imagenes/imagenes/pagina nosotras/fundadoras.png") center/cover;
-    color: #ffffff;
+    color: #ffffff !important;
   }
   body[data-page] .cta.about-commitment > div {
     max-width: none;
@@ -4545,6 +4545,11 @@ body[data-page] .cta.about-commitment .button {
   body[data-page] .cta.about-commitment h2,
   body[data-page] .cta.about-commitment p:not(.eyebrow) {
     color: #ffffff;
+  }
+  body[data-page] .cta.about-commitment .eyebrow {
+    color: #ffffff !important;
+    text-decoration-color: #ffffff !important;
+    -webkit-text-decoration-color: #ffffff !important;
   }
 }
 
@@ -4913,5 +4918,15 @@ body[data-page] .cta.about-commitment .button {
   }
   body[data-page="nosotras"] .trait-strip::after {
     display: none;
+  }
+}
+
+/* Regla definitiva: etiqueta del llamado a la acción blanca en móvil. */
+@media screen and (max-width: 768px) {
+  html body[data-page] main .cta.about-commitment p.eyebrow {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    text-decoration-color: #ffffff !important;
+    -webkit-text-decoration-color: #ffffff !important;
   }
 }
