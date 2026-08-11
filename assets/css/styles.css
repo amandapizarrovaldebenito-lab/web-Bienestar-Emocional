@@ -631,6 +631,14 @@ textarea:focus-visible {
   grid-column: 1/-1;
   min-height: 1.5rem;
 }
+.form-status.is-success {
+  color: #1b7f4d;
+  font-weight: 600;
+}
+.form-status.is-error {
+  color: #b3261e;
+  font-weight: 600;
+}
 .contact-side {
   display: grid;
   gap: 1rem;
