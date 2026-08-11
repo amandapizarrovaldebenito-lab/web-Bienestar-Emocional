@@ -240,6 +240,98 @@ document.querySelectorAll(".journey-programs .program-card").forEach((card) => {
 
 const contactForm = document.querySelector("#contact-form");
 
+const showToast = (message, type = "success", title) => {
+  const container = document.querySelector("#toast-container");
+  if (!container) return;
+
+  container.querySelectorAll(".toast").forEach((currentToast) => {
+    currentToast.remove();
+  });
+
+  const activeElement =
+    document.activeElement instanceof HTMLElement ? document.activeElement : null;
+  const toastId = `toast-${Date.now()}`;
+  const toast = document.createElement("div");
+  toast.className = `toast toast--${type}`;
+  toast.setAttribute("role", type === "error" ? "alertdialog" : "dialog");
+  toast.setAttribute("aria-modal", "true");
+  toast.setAttribute("aria-labelledby", `${toastId}-title`);
+  toast.setAttribute("aria-describedby", `${toastId}-message`);
+
+  const icon = document.createElement("span");
+  icon.className = "toast-icon";
+  icon.setAttribute("aria-hidden", "true");
+  icon.textContent = type === "error" ? "✕" : "✓";
+
+  const content = document.createElement("div");
+  content.className = "toast-content";
+
+  const heading = document.createElement("h2");
+  heading.className = "toast-title";
+  heading.id = `${toastId}-title`;
+  heading.textContent =
+    title || (type === "error" ? "No pudimos enviar" : "Consulta enviada");
+
+  const text = document.createElement("p");
+  text.className = "toast-message";
+  text.id = `${toastId}-message`;
+  text.textContent =
+    type === "success"
+      ? "\u00a1Gracias! Tu consulta fue enviada. Te responderemos pronto."
+      : message;
+
+  const closeButton = document.createElement("button");
+  closeButton.type = "button";
+  closeButton.className = "toast-close";
+  closeButton.setAttribute("aria-label", "Cerrar notificación");
+  closeButton.textContent = "×";
+
+  const actionButton = document.createElement("button");
+  actionButton.type = "button";
+  actionButton.className = "button button--primary toast-action";
+  actionButton.textContent = "Entendido";
+
+  content.append(heading, text, actionButton);
+  toast.append(closeButton, icon, content);
+  container.appendChild(toast);
+  container.classList.add("has-toast");
+  requestAnimationFrame(() => toast.classList.add("is-visible"));
+
+  let isDismissing = false;
+  const dismiss = () => {
+    if (isDismissing) return;
+    isDismissing = true;
+    container.removeEventListener("click", handleContainerClick);
+    document.removeEventListener("keydown", handleToastKeydown);
+    toast.classList.remove("is-visible");
+    const removeToast = () => {
+      toast.remove();
+      if (!container.querySelector(".toast")) {
+        container.classList.remove("has-toast");
+      }
+      activeElement?.focus();
+    };
+    toast.addEventListener("transitionend", removeToast, { once: true });
+    setTimeout(removeToast, 400);
+  };
+
+  const handleContainerClick = (event) => {
+    if (event.target === container) dismiss();
+  };
+
+  const handleToastKeydown = (event) => {
+    if (event.key === "Escape" && container.classList.contains("has-toast")) {
+      dismiss();
+    }
+  };
+
+  closeButton.addEventListener("click", dismiss);
+  actionButton.addEventListener("click", dismiss);
+  container.addEventListener("click", handleContainerClick);
+  document.addEventListener("keydown", handleToastKeydown);
+  setTimeout(() => actionButton.focus(), 260);
+};
+
 if (contactForm) {
   const status = contactForm.querySelector(".form-status");
   const showValidationMessage = () => {
@@ -277,10 +369,11 @@ if (contactForm) {
       !emailJsPublicKey || !emailJsServiceId || !emailJsTemplateId;
 
     if (notConfigured || typeof emailjs === "undefined") {
-      if (status) {
-        status.textContent =
-          "El envío aún no está configurado. Verifica las claves de EmailJS.";
-      }
+      if (status) status.textContent = "";
+      showToast(
+        "El envío aún no está configurado. Verifica las claves de EmailJS.",
+        "error",
+      );
       return;
     }
 
@@ -296,24 +389,23 @@ if (contactForm) {
       )
       .then(
         () => {
-          if (status) {
-            status.textContent =
-              "¡Gracias! Tu consulta fue enviada correctamente. Te responderemos en un plazo de 24 a 48 horas hábiles.";
-            status.classList.add("is-success");
-          }
+          showToast(
+            "¡Gracias! Tu consulta fue enviada correctamente. Te responderemos en un plazo de 24 a 48 horas hábiles.",
+            "success",
+          );
           contactForm.reset();
         },
         (error) => {
           console.error("EmailJS:", error);
-          if (status) {
-            status.textContent =
-              "No pudimos enviar tu mensaje. Inténtalo nuevamente o escríbenos a contacto@jornadasbienestar.cl";
-            status.classList.add("is-error");
-          }
+          showToast(
+            "No pudimos enviar tu mensaje. Inténtalo nuevamente o escríbenos a contacto@jornadasbienestar.cl",
+            "error",
+          );
         },
       )
       .finally(() => {
         submitButton.disabled = false;
+        if (status) status.textContent = "";
       });
   });
 }
