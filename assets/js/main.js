@@ -243,27 +243,77 @@ const contactForm = document.querySelector("#contact-form");
 if (contactForm) {
   const status = contactForm.querySelector(".form-status");
   const showValidationMessage = () => {
-    if (!contactForm.checkValidity() && status) {
+    if (status) {
       status.textContent =
         "Revisa los campos obligatorios indicados antes de enviar.";
+      status.classList.remove("is-success");
+      status.classList.add("is-error");
     }
   };
 
   contactForm
     .querySelector('[type="submit"]')
-    ?.addEventListener("click", showValidationMessage);
+    ?.addEventListener("click", () => {
+      if (contactForm.matches(":invalid")) showValidationMessage();
+    });
   contactForm.addEventListener("invalid", showValidationMessage, {
     capture: true,
   });
   contactForm.addEventListener("input", () => {
-    if (contactForm.checkValidity() && status) status.textContent = "";
+    if (!contactForm.matches(":invalid") && status) {
+      status.textContent = "";
+      status.classList.remove("is-success", "is-error");
+    }
   });
+  const emailJsPublicKey = contactForm.dataset.emailjsPublicKey;
+  const emailJsServiceId = contactForm.dataset.emailjsServiceId;
+  const emailJsTemplateId = contactForm.dataset.emailjsTemplateId;
+
   contactForm.addEventListener("submit", (event) => {
     event.preventDefault();
-    if (status) {
-      status.textContent =
-        "Gracias. Tu consulta quedó preparada; conectaremos el envío cuando exista un backend.";
+    const submitButton = contactForm.querySelector('[type="submit"]');
+
+    const notConfigured =
+      !emailJsPublicKey || !emailJsServiceId || !emailJsTemplateId;
+
+    if (notConfigured || typeof emailjs === "undefined") {
+      if (status) {
+        status.textContent =
+          "El envío aún no está configurado. Verifica las claves de EmailJS.";
+      }
+      return;
     }
-    contactForm.reset();
+
+    submitButton.disabled = true;
+    if (status) status.textContent = "Enviando tu consulta…";
+
+    emailjs
+      .sendForm(
+        emailJsServiceId,
+        emailJsTemplateId,
+        contactForm,
+        { publicKey: emailJsPublicKey },
+      )
+      .then(
+        () => {
+          if (status) {
+            status.textContent =
+              "¡Gracias! Tu consulta fue enviada correctamente. Te responderemos en un plazo de 24 a 48 horas hábiles.";
+            status.classList.add("is-success");
+          }
+          contactForm.reset();
+        },
+        (error) => {
+          console.error("EmailJS:", error);
+          if (status) {
+            status.textContent =
+              "No pudimos enviar tu mensaje. Inténtalo nuevamente o escríbenos a contacto@jornadasbienestar.cl";
+            status.classList.add("is-error");
+          }
+        },
+      )
+      .finally(() => {
+        submitButton.disabled = false;
+      });
   });
 }

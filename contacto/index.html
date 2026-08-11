@@ -260,7 +260,7 @@
     />
     <link rel="manifest" href="../site.webmanifest" />
     <meta name="theme-color" content="#234B78" />
-    <link rel="stylesheet" href="../assets/css/styles.css?v=8" />
+    <link rel="stylesheet" href="../assets/css/styles.css?v=9" />
   </head>
   <body data-page="contacto">
     <a class="skip" href="#contenido">Saltar al contenido</a>
@@ -359,7 +359,13 @@
           <div class="card contact-form-card">
             <h2>Envíanos tu consulta</h2>
             <p>Completa el formulario y te contactaremos a la brevedad.</p>
-            <form id="contact-form" class="contact-form">
+            <form
+              id="contact-form"
+              class="contact-form"
+              data-emailjs-service-id="default_service"
+              data-emailjs-template-id="template_ayf4xpb"
+              data-emailjs-public-key="7OUIJxaxNpBmkGdyK"
+            >
               <div class="field">
                 <label for="name">Nombre completo *</label>
                 <input id="name" name="name" autocomplete="name" required="" />
@@ -744,6 +750,10 @@
         </div>
       </div>
     </footer>
-    <script src="../assets/js/main.js?v=2"></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"
+    ></script>
+    <script src="../assets/js/main.js?v=4"></script>
   </body>
 </html>
