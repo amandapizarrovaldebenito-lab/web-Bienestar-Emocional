@@ -259,8 +259,8 @@
       href="../imagenes/imagenes/favicon.ico.png"
     />
     <link rel="manifest" href="../site.webmanifest" />
-    <meta name="theme-color" content="#234B78" />
-    <link rel="stylesheet" href="../assets/css/styles.css?v=8" />
+    <meta name="theme-color" content="#2s34B78" />
+    <link rel="stylesheet" href="../assets/css/styles.css?v=12" />
   </head>
   <body data-page="contacto">
     <a class="skip" href="#contenido">Saltar al contenido</a>
@@ -359,7 +359,13 @@
           <div class="card contact-form-card">
             <h2>Envíanos tu consulta</h2>
             <p>Completa el formulario y te contactaremos a la brevedad.</p>
-            <form id="contact-form" class="contact-form">
+            <form
+              id="contact-form"
+              class="contact-form"
+              data-emailjs-service-id="default_service"
+              data-emailjs-template-id="template_ayf4xpb"
+              data-emailjs-public-key="7OUIJxaxNpBmkGdyK"
+            >
               <div class="field">
                 <label for="name">Nombre completo *</label>
                 <input id="name" name="name" autocomplete="name" required="" />
@@ -752,7 +758,9 @@
     >
       <div class="contact-submit-dialog__content">
         <div class="contact-submit-dialog__spinner" aria-hidden="true"></div>
-        <div class="contact-submit-dialog__result-icon" aria-hidden="true">✓</div>
+        <div class="contact-submit-dialog__result-icon" aria-hidden="true">
+          ✓
+        </div>
         <h2 id="contact-submit-title">Enviando tu consulta</h2>
         <p id="contact-submit-message">
           Estamos enviando tu mensaje. Un momento, por favor.
@@ -767,5 +775,16 @@
       </div>
     </dialog>
     <script src="../assets/js/main.js?v=3"></script>
+    <div
+      class="toast-container"
+      id="toast-container"
+      aria-live="polite"
+      aria-atomic="false"
+    ></div>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"
+    ></script>
+    <script src="../assets/js/main.js?v=6"></script>
   </body>
 </html>
