@@ -744,6 +744,28 @@
         </div>
       </div>
     </footer>
-    <script src="../assets/js/main.js?v=2"></script>
+    <dialog
+      id="contact-submit-dialog"
+      class="contact-submit-dialog"
+      aria-labelledby="contact-submit-title"
+      aria-describedby="contact-submit-message"
+    >
+      <div class="contact-submit-dialog__content">
+        <div class="contact-submit-dialog__spinner" aria-hidden="true"></div>
+        <div class="contact-submit-dialog__result-icon" aria-hidden="true">✓</div>
+        <h2 id="contact-submit-title">Enviando tu consulta</h2>
+        <p id="contact-submit-message">
+          Estamos enviando tu mensaje. Un momento, por favor.
+        </p>
+        <button
+          class="button button--primary contact-submit-dialog__close"
+          type="button"
+          hidden
+        >
+          Entendido
+        </button>
+      </div>
+    </dialog>
+    <script src="../assets/js/main.js?v=3"></script>
   </body>
 </html>
